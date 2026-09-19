@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hasnat Safdar, Systems & Software Engineer</title>
+<meta name="description" content="Portfolio and writing from Hasnat Safdar, a systems and software engineer working on backend infrastructure, self-hosted Kubernetes, and open source.">
+<meta property="og:title" content="Hasnat Safdar, Systems & Software Engineer">
+<meta property="og:description" content="Portfolio and writing from Hasnat Safdar, a systems and software engineer working on backend infrastructure, self-hosted Kubernetes, and open source.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230d1117'/%3E%3Ctext x='6' y='17' font-family='monospace' font-size='14' fill='%232dd4bf'%3E%3E_%3C/text%3E%3C/svg%3E">
+
+<!-- Theme init: applied before first paint to avoid a flash of the wrong theme -->
+<script>
+  (function () {
+    var stored = localStorage.getItem('theme');
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var isDark = stored ? stored === 'dark' : prefersDark;
+    if (isDark) document.documentElement.classList.add('dark');
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  :root {
+    --bg: #fafafa;
+    --surface: #ffffff;
+    --surface-2: #f4f4f5;
+    --border: #e4e4e7;
+    --text: #18181b;
+    --text-muted: #52525b;
+  }
+  .dark {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-2: #1c2128;
+    --border: #21262d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+  }
+  html, body { background-color: var(--bg); }
+  body { color: var(--text); }
+
+  section[id] { scroll-margin-top: 5rem; }
+
+  *:focus-visible {
+    outline: 2px solid #14b8a6;
+    outline-offset: 2px;
+  }
+
+  .cursor-blink { animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .term-line {
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .term-line.is-visible { opacity: 1; transform: translateY(0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  ::selection { background: #2dd4bf; color: #0d1117; }
+</style>
+</head>
+
+<body class="font-sans antialiased" style="background-color:var(--bg); color:var(--text);">
+
+<!-- ============ HEADER ============ -->
+<header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md border-b" style="background-color: color-mix(in srgb, var(--bg) 75%, transparent); border-color: var(--border);">
+  <div class="max-w-6xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
+
+    <a href="#" data-portfolio-link class="font-mono font-bold text-lg tracking-tight" aria-label="Back to top">
+      hasnat<span class="text-teal-600 dark:text-teal-400">_</span>safdar
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8 text-sm" aria-label="Primary">
+      <a href="#stack" data-portfolio-link class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Stack</a>
+      <a href="#experience" data-portfolio-link class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Experience</a>
+      <a href="#projects" data-portfolio-link class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Projects</a>
+      <a href="mailto:hasnatsafdar.work@gmail.com" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <!-- View toggle: Portfolio / Blog -->
+      <div class="hidden sm:flex items-center rounded-md border p-0.5 text-sm" style="border-color: var(--border);">
+        <button id="toggle-portfolio" type="button" class="px-3 py-1 rounded-[5px] font-medium transition-colors" aria-pressed="true">Portfolio</button>
+        <button id="toggle-blog" type="button" class="px-3 py-1 rounded-[5px] font-medium transition-colors" style="color: var(--text-muted);" aria-pressed="false">Blog</button>
+      </div>
+
+      <!-- Theme toggle -->
+      <button id="theme-toggle" type="button" class="w-9 h-9 flex items-center justify-center rounded-md border transition-colors hover:border-teal-500" style="border-color: var(--border);" aria-label="Toggle color theme">
+        <svg id="icon-sun" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg id="icon-moon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" type="button" class="md:hidden w-9 h-9 flex items-center justify-center rounded-md border" style="border-color: var(--border);" aria-label="Open menu" aria-expanded="false">
+        <svg id="icon-menu" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <svg id="icon-close-menu" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu panel -->
+  <div id="mobile-menu" class="hidden md:hidden border-t px-5 py-4 space-y-3 text-sm" style="border-color: var(--border);">
+    <a href="#stack" data-portfolio-link data-close-mobile class="block py-1">Stack</a>
+    <a href="#experience" data-portfolio-link data-close-mobile class="block py-1">Experience</a>
+    <a href="#projects" data-portfolio-link data-close-mobile class="block py-1">Projects</a>
+    <a href="mailto:hasnatsafdar.work@gmail.com" class="block py-1">Contact</a>
+    <div class="flex items-center gap-2 pt-2">
+      <button id="toggle-portfolio-mobile" type="button" class="flex-1 px-3 py-1.5 rounded-md border font-medium" style="border-color: var(--border);">Portfolio</button>
+      <button id="toggle-blog-mobile" type="button" class="flex-1 px-3 py-1.5 rounded-md border font-medium" style="border-color: var(--border); color: var(--text-muted);">Blog</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ PORTFOLIO VIEW ============ -->
+<main id="view-portfolio">
+
+  <!-- HERO -->
+  <section id="hero" class="max-w-6xl mx-auto px-5 md:px-8 pt-32 pb-20 md:pt-40 md:pb-28">
+    <div class="grid md:grid-cols-2 gap-14 items-center">
+
+      <div>
+        <p class="term-line font-mono text-sm text-teal-600 dark:text-teal-400 mb-3">Hi, I'm Hasnat.</p>
+        <h1 class="term-line font-mono font-bold text-4xl md:text-5xl leading-tight tracking-tight mb-5">
+          I work on the systems side of software.
+        </h1>
+        <p class="term-line text-lg mb-8 max-w-md" style="color: var(--text-muted);">
+          I'm a computer science student in Islamabad, doing freelance backend and DevOps work on the side.
+          Most weekends I'm rebuilding some part of my homelab, whether it needs it or not.
+        </p>
+
+        <div class="term-line flex flex-wrap items-center gap-3 mb-8">
+          <a href="#projects" data-portfolio-link class="px-5 py-2.5 rounded-md bg-teal-500 hover:bg-teal-600 text-zinc-950 font-medium text-sm transition-colors">
+            View my projects
+          </a>
+          <a href="resume.pdf" download class="px-5 py-2.5 rounded-md border font-medium text-sm hover:border-teal-500 transition-colors" style="border-color: var(--border);">
+            Download resume
+          </a>
+          <a href="mailto:hasnatsafdar.work@gmail.com" class="px-2 py-2.5 text-sm font-medium hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
+            Say hello
+          </a>
+        </div>
+
+        <div class="term-line flex items-center gap-4" style="color: var(--text-muted);">
+          <a href="https://github.com/hasnatsafdar" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55 0-.27-.01-1.15-.02-2.09-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .3.2.66.79.55A10.52 10.52 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/hasnatsafdar" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          </a>
+          <a href="mailto:hasnatsafdar.work@gmail.com" aria-label="Email" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Terminal panel -->
+      <div class="term-line rounded-lg border overflow-hidden shadow-xl" style="border-color: var(--border);">
+        <div class="flex items-center gap-2 px-4 py-2.5 bg-zinc-800">
+          <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+          <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+          <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+          <span class="ml-2 text-xs font-mono text-zinc-400">hasnat@islamabad</span>
+        </div>
+        <div id="terminal-body" class="bg-zinc-900 text-zinc-100 font-mono text-sm px-5 py-6 space-y-3">
+          <div class="term-typed-line"><span class="text-teal-400">$</span> whoami</div>
+          <div class="term-typed-line pl-4 text-zinc-400">hasnat safdar</div>
+          <div class="term-typed-line pt-2"><span class="text-teal-400">$</span> role</div>
+          <div class="term-typed-line pl-4 text-zinc-400">systems &amp; software engineer</div>
+          <div class="term-typed-line pt-2"><span class="text-teal-400">$</span> based_in</div>
+          <div class="term-typed-line pl-4 text-zinc-400">rawalpindi, pakistan</div>
+          <div class="term-typed-line pt-2"><span class="text-teal-400">$</span> currently</div>
+          <div class="term-typed-line pl-4 text-zinc-400">open to freelance backend &amp; devops work<span class="cursor-blink">_</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack" class="max-w-6xl mx-auto px-5 md:px-8 py-16 md:py-20 border-t" style="border-color: var(--border);">
+    <h2 class="font-mono font-bold text-2xl md:text-3xl mb-2">Stack</h2>
+    <p class="mb-10 max-w-xl" style="color: var(--text-muted);">
+      The languages, infrastructure, and tools I reach for most, grouped by what they're for.
+    </p>
+
+    <div class="space-y-8">
+      <div>
+        <h3 class="text-sm font-semibold mb-3" style="color: var(--text-muted);">Languages</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="badge">Python</span>
+          <span class="badge">Bash</span>
+          <span class="badge">C</span>
+          <span class="badge">C++</span>
+          <span class="badge">Assembly</span>
+          <span class="badge">Go</span>
+          <span class="badge">Nix</span>
+          <span class="badge">Haskell</span>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-sm font-semibold mb-3" style="color: var(--text-muted);">Web &amp; Cloud</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="badge">HTML</span>
+          <span class="badge">CSS</span>
+          <span class="badge">JavaScript</span>
+          <span class="badge">SQL</span>
+          <span class="badge">YAML</span>
+          <span class="badge">Terraform</span>
+          <span class="badge">AWS (EC2/S3)</span>
+          <span class="badge">Wireguard</span>
+          <span class="badge">Nginx</span>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-sm font-semibold mb-3" style="color: var(--text-muted);">Infrastructure &amp; Tools</h3>
+        <div class="flex flex-wrap gap-2">
+          <span class="badge">Linux</span>
+          <span class="badge">Proxmox</span>
+          <span class="badge">Docker</span>
+          <span class="badge">K3s</span>
+          <span class="badge">Traefik</span>
+          <span class="badge">TrueNAS / ZFS</span>
+          <span class="badge">Git</span>
+          <span class="badge">CI/CD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="max-w-6xl mx-auto px-5 md:px-8 py-16 md:py-20 border-t" style="border-color: var(--border);">
+    <h2 class="font-mono font-bold text-2xl md:text-3xl mb-2">Experience</h2>
+    <p class="mb-10 max-w-xl" style="color: var(--text-muted);">
+      Where I've worked and what I've built along the way.
+    </p>
+
+    <div class="space-y-10 border-l pl-6 md:pl-8" style="border-color: var(--border);">
+
+      <div class="relative">
+        <span class="absolute -left-[29px] md:-left-[37px] top-1.5 w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+        <p class="font-mono text-xs text-teal-600 dark:text-teal-400 mb-1">Jul 2026 to Present</p>
+        <h3 class="font-semibold text-lg">Computer Operator</h3>
+        <p class="text-sm mb-3" style="color: var(--text-muted);">Kohinoor Textile Mills, Rawalpindi</p>
+        <ul class="text-sm space-y-1.5 list-disc pl-5" style="color: var(--text-muted);">
+          <li>Process and manage large datasets in Excel, keeping structured tables accurate to 99.9 percent.</li>
+          <li>Handle dispatch data and stitching program requests through K-Hive, keeping entries accurate and on time.</li>
+          <li>Maintain and consolidate stock records for tracking and reporting.</li>
+        </ul>
+      </div>
+
+      <div class="relative">
+        <span class="absolute -left-[29px] md:-left-[37px] top-1.5 w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+        <p class="font-mono text-xs text-teal-600 dark:text-teal-400 mb-1">One-time project</p>
+        <h3 class="font-semibold text-lg">Systems Administration, Freelance</h3>
+        <p class="text-sm mb-3" style="color: var(--text-muted);">Self-employed</p>
+        <ul class="text-sm space-y-1.5 list-disc pl-5" style="color: var(--text-muted);">
+          <li>Set up a Dockerized deployment for a small FastAPI-based AI chatbot backend for an ecommerce store.</li>
+          <li>Deployed on AWS EC2 with a basic CI/CD pipeline.</li>
+        </ul>
+      </div>
+
+      <div class="relative">
+        <span class="absolute -left-[29px] md:-left-[37px] top-1.5 w-2.5 h-2.5 rounded-full bg-teal-500"></span>
+        <p class="font-mono text-xs text-teal-600 dark:text-teal-400 mb-1">Sep 2026 to Oct 2026</p>
+        <h3 class="font-semibold text-lg">Sales and Marketing Intern</h3>
+        <p class="text-sm mb-3" style="color: var(--text-muted);">Tech Choices, Islamabad</p>
+        <ul class="text-sm space-y-1.5 list-disc pl-5" style="color: var(--text-muted);">
+          <li>Helped set up and run ad campaigns, plus basic SEO work.</li>
+          <li>Handled customer service and some sales negotiation.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="max-w-6xl mx-auto px-5 md:px-8 py-16 md:py-20 border-t" style="border-color: var(--border);">
+    <h2 class="font-mono font-bold text-2xl md:text-3xl mb-2">Projects</h2>
+    <p class="mb-10 max-w-xl" style="color: var(--text-muted);">
+      A few things I've built or contributed to, mostly to learn how they actually work.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-5">
+
+      <article class="card">
+        <h3 class="font-semibold text-lg mb-2">Kubernetes Homelab on Proxmox</h3>
+        <p class="text-sm mb-4" style="color: var(--text-muted);">
+          A self-hosted cluster running on Proxmox, built mostly to learn how production infrastructure behaves once I'm the one maintaining it. About 10 VMs, no downtime so far.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          <span class="tag">Proxmox</span><span class="tag">K3s</span><span class="tag">Docker</span><span class="tag">Traefik</span><span class="tag">TrueNAS</span><span class="tag">ZFS</span>
+        </div>
+        <div class="flex items-center gap-4 text-sm pt-1">
+          <a href="#" class="card-link">GitHub</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3 class="font-semibold text-lg mb-2">This Website</h3>
+        <p class="text-sm mb-4" style="color: var(--text-muted);">
+          The site you're reading right now. Built from scratch with plain HTML, CSS, and JavaScript, and deployed on GitHub Pages.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">GitHub Pages</span>
+        </div>
+        <div class="flex items-center gap-4 text-sm pt-1">
+          <a href="https://github.com/hasnatsafdar" target="_blank" rel="noopener noreferrer" class="card-link">GitHub</a>
+          <a href="https://hasnatsafdar.github.io" target="_blank" rel="noopener noreferrer" class="card-link">Live site</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3 class="font-semibold text-lg mb-2">AI Chatbot Deployment for an Ecommerce Store</h3>
+        <p class="text-sm mb-4" style="color: var(--text-muted);">
+          Freelance systems work. Packaged a FastAPI-based chatbot backend into a Docker deployment and shipped it to AWS EC2 with a basic CI/CD pipeline.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          <span class="tag">Docker</span><span class="tag">FastAPI</span><span class="tag">AWS EC2</span><span class="tag">CI/CD</span>
+        </div>
+        <div class="flex items-center gap-4 text-sm pt-1" style="color: var(--text-muted);">
+          <span>Private client project</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <h3 class="font-semibold text-lg">Documentation for Yazi</h3>
+          <span class="tag whitespace-nowrap">Open source</span>
+        </div>
+        <p class="text-sm mb-4" style="color: var(--text-muted);">
+          Wrote the docs for Yazi's fzf and zoxide integration. Yazi is a terminal file manager with about 100,000 monthly visits.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          <span class="tag">Documentation</span><span class="tag">Markdown</span>
+        </div>
+        <div class="flex items-center gap-4 text-sm pt-1">
+          <a href="https://github.com/sxyazi/yazi" target="_blank" rel="noopener noreferrer" class="card-link">GitHub</a>
+        </div>
+      </article>
+
+      <article class="card md:col-span-2">
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <h3 class="font-semibold text-lg">Bash Fix for Omarchy</h3>
+          <span class="tag whitespace-nowrap">Open source</span>
+        </div>
+        <p class="text-sm mb-4 max-w-2xl" style="color: var(--text-muted);">
+          Found and fixed a broken video transcoding function in Omarchy, DHH's Linux distribution. The fix was merged upstream.
+        </p>
+        <div class="flex flex-wrap gap-1.5 mb-4">
+          <span class="tag">Bash</span><span class="tag">Open source</span>
+        </div>
+        <div class="flex items-center gap-4 text-sm pt-1">
+          <a href="https://github.com/basecamp/omarchy" target="_blank" rel="noopener noreferrer" class="card-link">GitHub</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ BLOG VIEW ============ -->
+<main id="view-blog" class="hidden">
+  <section id="blog" class="max-w-6xl mx-auto px-5 md:px-8 pt-32 pb-20 md:pt-40 md:pb-28">
+    <h2 class="font-mono font-bold text-2xl md:text-3xl mb-2">Blog</h2>
+    <p class="mb-10 max-w-xl" style="color: var(--text-muted);">
+      Notes on the systems and tools I use, written as I learn them.
+    </p>
+
+    <div class="grid md:grid-cols-3 gap-5">
+
+      <article class="card flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-mono mb-3" style="color: var(--text-muted);">
+            <span>Aug 2026</span><span>&middot;</span><span>6 min read</span>
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">Building a Homelab on Proxmox: What Actually Broke</h3>
+          <p class="text-sm mb-4" style="color: var(--text-muted);">
+            A homelab teaches you things a tutorial can't. Here's what actually went wrong while I put together a small Kubernetes cluster on Proxmox, and what I'd do differently.
+          </p>
+        </div>
+        <button type="button" data-post="homelab" class="read-more text-sm font-medium text-teal-600 dark:text-teal-400 text-left hover:underline">
+          Read more
+        </button>
+      </article>
+
+      <article class="card flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-mono mb-3" style="color: var(--text-muted);">
+            <span>Jun 2026</span><span>&middot;</span><span>4 min read</span>
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">My First Open Source Pull Request</h3>
+          <p class="text-sm mb-4" style="color: var(--text-muted);">
+            I fixed a small Bash bug in Omarchy. It wasn't a complicated fix. Getting the courage to open the pull request was the actual hard part.
+          </p>
+        </div>
+        <button type="button" data-post="omarchy" class="read-more text-sm font-medium text-teal-600 dark:text-teal-400 text-left hover:underline">
+          Read more
+        </button>
+      </article>
+
+      <article class="card flex flex-col justify-between">
+        <div>
+          <div class="flex items-center gap-2 text-xs font-mono mb-3" style="color: var(--text-muted);">
+            <span>Mar 2026</span><span>&middot;</span><span>5 min read</span>
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">Writing Documentation Nobody Asked For, and Getting It Merged</h3>
+          <p class="text-sm mb-4" style="color: var(--text-muted);">
+            Yazi didn't have clear documentation for its fzf and zoxide integration, so I wrote some. Here's what documentation taught me about a project I didn't know well yet.
+          </p>
+        </div>
+        <button type="button" data-post="yazi-docs" class="read-more text-sm font-medium text-teal-600 dark:text-teal-400 text-left hover:underline">
+          Read more
+        </button>
+      </article>
+
+    </div>
+  </section>
+</main>
+
+<!-- ============ BLOG MODAL ============ -->
+<div id="blog-modal" class="hidden fixed inset-0 z-[60] items-center justify-center p-4">
+  <div id="blog-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+  <div class="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-lg border p-7 md:p-9" style="background-color: var(--surface); border-color: var(--border);">
+    <button id="modal-close" type="button" class="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-md border hover:border-teal-500" style="border-color: var(--border);" aria-label="Close article">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="modal-meta" class="text-xs font-mono mb-3 pr-10" style="color: var(--text-muted);"></div>
+    <h3 id="modal-title" class="font-mono font-bold text-2xl mb-5 pr-6"></h3>
+    <div id="modal-body" class="space-y-4 text-sm leading-relaxed" style="color: var(--text-muted);"></div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="border-t" style="border-color: var(--border);">
+  <div class="max-w-6xl mx-auto px-5 md:px-8 py-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <div>
+      <p class="text-sm">&copy; <span id="footer-year"></span> Hasnat Safdar</p>
+      <p class="text-xs mt-1" style="color: var(--text-muted);">Built with HTML, Tailwind CSS, and vanilla JavaScript. No frameworks.</p>
+    </div>
+    <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm" aria-label="Footer">
+      <a href="#stack" data-portfolio-link class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Stack</a>
+      <a href="#experience" data-portfolio-link class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Experience</a>
+      <a href="#projects" data-portfolio-link class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Projects</a>
+      <button id="footer-blog-link" type="button" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Blog</button>
+    </nav>
+    <div class="flex items-center gap-4" style="color: var(--text-muted);">
+      <a href="https://github.com/hasnatsafdar" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.57.1.78-.25.78-.55 0-.27-.01-1.15-.02-2.09-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.24 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14 0 1.55-.01 2.79-.01 3.17 0 .3.2.66.79.55A10.52 10.52 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5z"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/hasnatsafdar" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+      </a>
+      <a href="mailto:hasnatsafdar.work@gmail.com" aria-label="Email" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .badge {
+    font-family: '"JetBrains Mono"', monospace;
+    font-size: 0.8125rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.375rem;
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .badge:hover { border-color: #14b8a6; color: #0d9488; }
+  .dark .badge:hover { border-color: #2dd4bf; color: #2dd4bf; }
+
+  .card {
+    border: 1px solid var(--border);
+    background-color: var(--surface);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transition: border-color 0.2s ease;
+  }
+  .card:hover { border-color: #14b8a6; }
+  .dark .card:hover { border-color: #2dd4bf; }
+
+  .tag {
+    font-family: '"JetBrains Mono"', monospace;
+    font-size: 0.6875rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 0.25rem;
+    background-color: var(--surface-2);
+    color: var(--text-muted);
+  }
+
+  .card-link {
+    color: #0d9488;
+    font-weight: 500;
+  }
+  .dark .card-link { color: #2dd4bf; }
+  .card-link:hover { text-decoration: underline; }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  var root = document.documentElement;
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Theme toggle ---------- */
+  var sunIcon = document.getElementById('icon-sun');
+  var moonIcon = document.getElementById('icon-moon');
+
+  function refreshThemeIcon() {
+    var isDark = root.classList.contains('dark');
+    sunIcon.classList.toggle('hidden', !isDark);
+    moonIcon.classList.toggle('hidden', isDark);
+  }
+  refreshThemeIcon();
+
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    root.classList.toggle('dark');
+    localStorage.setItem('theme', root.classList.contains('dark') ? 'dark' : 'light');
+    refreshThemeIcon();
+  });
+
+  /* ---------- Portfolio / Blog view toggle ---------- */
+  var viewPortfolio = document.getElementById('view-portfolio');
+  var viewBlog = document.getElementById('view-blog');
+  var togglePortfolioBtns = [document.getElementById('toggle-portfolio'), document.getElementById('toggle-portfolio-mobile')];
+  var toggleBlogBtns = [document.getElementById('toggle-blog'), document.getElementById('toggle-blog-mobile'), document.getElementById('footer-blog-link')];
+
+  function setActiveToggleStyles(activeIsPortfolio) {
+    var activeCls = ['bg-teal-500', 'text-zinc-950'];
+    [document.getElementById('toggle-portfolio'), document.getElementById('toggle-portfolio-mobile')].forEach(function (btn) {
+      if (!btn) return;
+      btn.classList.toggle('bg-teal-500', activeIsPortfolio);
+      btn.classList.toggle('text-zinc-950', activeIsPortfolio);
+      btn.style.color = activeIsPortfolio ? '' : 'var(--text-muted)';
+      btn.setAttribute('aria-pressed', String(activeIsPortfolio));
+    });
+    [document.getElementById('toggle-blog'), document.getElementById('toggle-blog-mobile')].forEach(function (btn) {
+      if (!btn) return;
+      btn.classList.toggle('bg-teal-500', !activeIsPortfolio);
+      btn.classList.toggle('text-zinc-950', !activeIsPortfolio);
+      btn.style.color = !activeIsPortfolio ? '' : 'var(--text-muted)';
+      btn.setAttribute('aria-pressed', String(!activeIsPortfolio));
+    });
+  }
+
+  function showPortfolio(scrollTargetId) {
+    viewBlog.classList.add('hidden');
+    viewPortfolio.classList.remove('hidden');
+    setActiveToggleStyles(true);
+    if (scrollTargetId) {
+      requestAnimationFrame(function () {
+        var target = document.getElementById(scrollTargetId);
+        if (target) target.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }
+
+  function showBlog() {
+    viewPortfolio.classList.add('hidden');
+    viewBlog.classList.remove('hidden');
+    setActiveToggleStyles(false);
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+
+  togglePortfolioBtns.forEach(function (btn) { if (btn) btn.addEventListener('click', function () { showPortfolio(); }); });
+  toggleBlogBtns.forEach(function (btn) { if (btn) btn.addEventListener('click', showBlog); });
+
+  setActiveToggleStyles(true);
+
+  /* Anchor links that must ensure the portfolio view is showing first */
+  document.querySelectorAll('[data-portfolio-link]').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var href = link.getAttribute('href') || '';
+      if (href.charAt(0) === '#' && href.length > 1) {
+        e.preventDefault();
+        showPortfolio(href.slice(1));
+      } else if (href === '#') {
+        e.preventDefault();
+        showPortfolio();
+      }
+    });
+  });
+
+  /* ---------- Mobile menu ---------- */
+  var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var iconMenu = document.getElementById('icon-menu');
+  var iconCloseMenu = document.getElementById('icon-close-menu');
+
+  mobileMenuBtn.addEventListener('click', function () {
+    var isOpen = !mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden');
+    iconMenu.classList.toggle('hidden', !isOpen);
+    iconCloseMenu.classList.toggle('hidden', isOpen);
+    mobileMenuBtn.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  document.querySelectorAll('[data-close-mobile]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      mobileMenu.classList.add('hidden');
+      iconMenu.classList.remove('hidden');
+      iconCloseMenu.classList.add('hidden');
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ---------- Footer year ---------- */
+  document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+  /* ---------- Hero terminal reveal ---------- */
+  var termLines = document.querySelectorAll('.term-line');
+  var typedLines = document.querySelectorAll('.term-typed-line');
+
+  if (prefersReducedMotion) {
+    termLines.forEach(function (el) { el.classList.add('is-visible'); });
+  } else {
+    termLines.forEach(function (el, i) {
+      setTimeout(function () { el.classList.add('is-visible'); }, 90 * i);
+    });
+  }
+
+  typedLines.forEach(function (el) { el.style.opacity = prefersReducedMotion ? '1' : '0'; });
+  if (!prefersReducedMotion) {
+    typedLines.forEach(function (el, i) {
+      setTimeout(function () {
+        el.style.transition = 'opacity 0.25s ease';
+        el.style.opacity = '1';
+      }, 500 + 160 * i);
+    });
+  }
+
+  /* ---------- Blog modal ---------- */
+  var posts = {
+    homelab: {
+      title: 'Building a Homelab on Proxmox: What Actually Broke',
+      meta: 'Aug 2026 &middot; 6 min read',
+      body: [
+        "I started this mostly because I wanted to understand what \u2018production\u2019 means beyond reading about it. The plan was simple enough on paper: K3s across a handful of Ubuntu cloud VMs on Proxmox, cloud-init for provisioning, Traefik in front for SSL, and a TrueNAS box for storage and backups.",
+        "The cloud-init part broke first. A template I thought was fine silently skipped a DNS setting, and I spent an evening debugging pods that couldn't resolve anything, before realizing the node itself couldn't either.",
+        "Traefik's SSL renewal was the second lesson. It worked fine until a certificate quietly expired because a DNS challenge started failing, and nothing told me until a service just stopped loading.",
+        "The ZFS snapshots have been the most reassuring part of the whole setup. I've restored from one twice now, once after a config change I regretted and once after I just deleted the wrong thing. Both times it worked exactly as it was supposed to, which is honestly rare enough in this project to be worth mentioning.",
+        "It still isn't finished, and I don't think it's supposed to be. About 10 VMs are running on it now with no downtime so far, which I'll take."
+      ]
+    },
+    omarchy: {
+      title: 'My First Open Source Pull Request',
+      meta: 'Jun 2026 &middot; 4 min read',
+      body: [
+        "I use Omarchy daily, and at some point its video transcoding function just stopped working. Nothing dramatic, just a Bash script that quietly failed on certain file types.",
+        "I could have worked around it. Instead I opened the script, read through it a few times, and found the part that was breaking. The fix itself took maybe twenty minutes once I understood the problem.",
+        "Opening the pull request took longer than writing the fix. I read the contributing guidelines three times, second guessed the commit message, and almost closed the tab twice. It turned out to be fine. A maintainer reviewed it, asked one small question, and merged it within a couple of days.",
+        "The lesson I took from it wasn't really about Bash. It was that most open source projects are more approachable than they look from the outside, and the biggest barrier is usually just deciding to open the tab."
+      ]
+    },
+    'yazi-docs': {
+      title: 'Writing Documentation Nobody Asked For, and Getting It Merged',
+      meta: 'Mar 2026 &middot; 5 min read',
+      body: [
+        "Yazi is a terminal file manager I'd been using for a few months, and I kept noticing the same gap. The fzf and zoxide integration worked well, but there was no documentation explaining how to actually set it up.",
+        "I didn't know the codebase. What I did know was how confusing it had been to figure this out myself, so I wrote the guide I wish I'd had, tested every step against a clean config, and opened a pull request.",
+        "Writing the docs turned out to be a decent way into a project I didn't know well yet. I had to actually understand the integration to explain it clearly, which meant reading more of the source than I expected to.",
+        "It's a small contribution to a project with a lot of daily users, but it's the kind of thing that adds up. If you're looking for a way into an open source project, documentation is often a better entry point than code."
+      ]
+    }
+  };
+
+  var modal = document.getElementById('blog-modal');
+  var modalTitle = document.getElementById('modal-title');
+  var modalMeta = document.getElementById('modal-meta');
+  var modalBody = document.getElementById('modal-body');
+  var modalClose = document.getElementById('modal-close');
+  var modalBackdrop = document.getElementById('blog-modal-backdrop');
+  var lastFocused = null;
+
+  function openModal(postKey) {
+    var post = posts[postKey];
+    if (!post) return;
+    modalTitle.textContent = post.title;
+    modalMeta.innerHTML = post.meta;
+    modalBody.innerHTML = post.body.map(function (p) { return '<p>' + p + '</p>'; }).join('');
+    lastFocused = document.activeElement;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    modalClose.focus();
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  }
+
+  document.querySelectorAll('.read-more').forEach(function (btn) {
+    btn.addEventListener('click', function () { openModal(btn.getAttribute('data-post')); });
+  });
+
+  modalClose.addEventListener('click', closeModal);
+  modalBackdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+  });
+
+})();
+</script>
+
+</body>
+</html>
